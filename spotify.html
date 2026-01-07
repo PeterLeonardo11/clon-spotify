@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Music Player</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-brands fa-spotify"></i><span>TuMúsica</span>
+            </div>
+
+            <nav class="menu">
+                <ul>
+                    <li class="active"><a href="#"><i class="fa-solid fa-house"></i> Inicio</a></li>
+                    <li><a href="#"><i class="fa-solid fa-magnifying-glass"></i> Buscar</a></li>
+                    <li><a href="#"><i class="fa-solid fa-bookmark"></i> Tu biblioteca</a></li>
+                </ul>
+            </nav>
+
+            <div class="playlists">
+                <p class="section-title">PLAYLISTS</p>
+                <ul>
+                    <li><div class="plus-box"><i class="fa-solid fa-plus"></i></div> Crear Playlist</li>
+                    <li><div class="heart-box"><i class="fa-solid fa-heart"></i></div> Tus 'Me Gusta'</li>
+                    <hr> <div class="playlist-scroll">
+                        <li>Rock Clásico</li>
+                        <li>Pop Hits</li>
+                        <li>Coding Mode 💻</li>
+                        <li>Para entrenar</li>
+                        <li>Viaje al sur</li>
+                        <li>Gaming</li>
+                    </div>
+                </ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="top-header">
+                <div class="arrows">
+                    <div class="circle"><i class="fa-solid fa-chevron-left"></i></div>
+                    <div class="circle"><i class="fa-solid fa-chevron-right"></i></div>
+                </div>
+                <div class="user-pill">
+                    <i class="fa-regular fa-user"></i>
+                    <span>Perfil</span>
+                </div>
+            </header>
+
+            <div class="content-padding">
+                <h2>Buenas noches</h2>
+
+                <div class="cards-grid">
+                    <div class="music-card">
+                        <div class="img-container">
+                            <img src="https://i.scdn.co/image/ab67706f00000002211bac41d21d8dbd153e1c04" alt="Rock Classics">
+                            <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                        <h3>Rock Classics</h3>
+                        <p>Los grandes éxitos de siempre.</p>
+                    </div>
+
+                    <div class="music-card">
+                        <div class="img-container">
+                            <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da843abd9b99b6e054a1080530b4" alt="Relax">
+                            <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                        <h3>Mix Relax</h3>
+                        <p>Chill beats para programar.</p>
+                    </div>
+
+                    <div class="music-card">
+                        <div class="img-container">
+                            <img src="https://image-cdn-ak.spotifycdn.com/image/ab67706c0000da8444c52e36932a92f0998217ea" alt="Synthwave">
+                            <div class="play-btn"><i class="fa-solid fa-play"></i></div>
+                        </div>
+                        <h3>Synthwave</h3>
+                        <p>Retro vibes 80s.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
