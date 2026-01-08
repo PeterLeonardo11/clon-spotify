@@ -116,3 +116,224 @@ hr {
     border-top: 1px solid #282828;
     margin: 10px 0;
 }
+
+/* Scroll solo para la lista de playlists */
+.playlist-scroll {
+    height: 200px;
+    overflow-y: auto;
+}
+
+/* Estilos para la barra de desplazamiento */
+.playlist-scroll::-webkit-scrollbar {
+    width: 7px;
+}
+
+.playlist-scroll::-webkit-scrollbar-thumb {
+    background: #555;
+    border-radius: 4px;
+}
+
+/* ----- 2. MAIN CONTENT ----- */
+.main-content {
+    background-color: #121212;
+    border-radius: 10px;
+    margin: 10px 10px 0 0;
+    overflow-y: auto;
+    position: relative;
+    background: linear-gradient(to bottom, #167f92 0%, #121212 45%);
+}
+
+.top-header {
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.arrows .circle {
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.user-pill {
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+}
+
+.content-padding {
+    padding: 20px;
+}
+
+/* Grilla de álbumes */
+.cards-grid {
+    display: grid;
+    /* Columnas automaticas responsivas */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    margin-top: 20px;
+}
+
+/* Tarjetas de Música */
+.music-card {
+    background-color: #181818;
+    padding: 16px;
+    border-radius: 8px;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.music-card:hover {
+    background-color: #282828;
+}
+
+.img-container {
+    position: relative;
+    margin-bottom: 16px;
+    
+}
+
+.music-card img {
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+
+/* Icono de play en la imagen */
+.play-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 48px;
+    height: 48px;
+    background-color: #1da1b9c3;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000;
+    font-size: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+}
+
+/* Mostrar el botón de play al pasar el ratón */
+.music-card:hover .play-btn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.music-card h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Pone "..." si el texto es muy largo */
+}
+
+.music-card p {
+    font-size: 14px;
+    color: #b3b3b3;
+}
+
+/* ----- 3. PLAYER ----- */
+.player-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 90px; /* La misma altura que la fila del grid */
+    background-color: #181818;
+    border-top: 1px solid #282828;
+    padding: 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+}
+
+/* Izquierda: Información de la canción */
+.player-left {
+    display: flex;
+    align-items: center;
+    width: 30%;
+    gap: 15px;
+}
+
+.player-left img {
+    width: 56px;
+    height: 56px;
+    border-radius: 4px;
+}
+
+.song-info h4 {
+    font-size: 14px;
+    margin-bottom: 3px;
+    cursor: pointer;
+}
+
+.song-info p {
+    font-size: 12px;
+    color: #b3b3b3;
+    cursor: pointer;
+}
+
+.song-info h4:hover, .song-info p:hover {
+    text-decoration: underline;
+}
+
+/* Centro: Controles de reproducción */
+.player-center {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.player-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    font-size: 16px;
+    color: #b3b3b3;
+}
+
+.play-circle {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.play-circle:hover {
+    transform: scale(1.1);
+}
+
+/* Barra de progreso */
