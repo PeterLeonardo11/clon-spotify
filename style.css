@@ -411,3 +411,101 @@ hr {
     color: #fff;
     cursor: pointer;
 }
+
+
+/* ----- ESTILOS BASE DEL MENU MOVIL (Oculto por defecto) ----- */
+
+
+
+
+
+/* ----- MEDIA QUERIES (Transiciones responsivas) ----- */
+@media screen and (max-width: 768px) {
+
+    /* 1. Layout general */
+    .app-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto; /* Contenido / Sidebar / Player */
+    }
+
+    /* 2. Ocultar cosas de escritorio */
+    .sidebar {
+        display: none;
+    }
+
+    /* 3. Ajustar contenido principal */
+    .main-content {
+        margin: 0; /* Quitar margen */
+        border-radius: 0; /* Quitar bordes redondeados */
+        padding-bottom: 140px; /* Espacio para el player */
+    }
+
+    /* 4. Ajustar player */
+    .player-bar {
+        width: 99%;
+        bottom: 57px; /* Subir un poco el player */
+        height: 60px; /* Reducir altura */
+        padding: 0 10px;
+        background-color: #181818;
+        border-bottom: 1px solid #282828;
+        border-radius: 10px;
+    }
+
+    /* Ocultamos lo que no entra en el player */
+    .player-right {
+        display: none;
+    }
+    .progress-container {
+        display: none;
+    }
+
+    .fa-heart {
+        display: none;
+    }
+
+    /* Simplificamos los controles */
+    .fa-shuffle, .fa-backward-step, .fa-forward-step, .fa-repeat {
+        display: none;
+    }
+
+    .player-left {
+        width: 60%;
+    }
+    .player-center {
+        width: 40%;
+        align-items: flex-end;
+    }
+
+    /* 5. Mostrar el menú móvil */
+    .mobile-nav{
+        display: flex;
+        flex-direction: row;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;    
+        height: 57px;
+        background-color: #181818e8;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 200;
+    }
+
+    .mobile-nav i {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+        color: #888686;
+        font-size: 20px;
+    }
+
+    .mobile-nav a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: #888686;
+    }
+}
