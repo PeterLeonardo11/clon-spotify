@@ -357,7 +357,7 @@ hr {
 
 .progress-fill {
     height: 100%;
-    width: 30%; /* Ejemplo de progreso */
+    width: 0%; /* Ancho inicial */
     background-color: #b3b3b3;
     border-radius: 2px;
     position: relative;

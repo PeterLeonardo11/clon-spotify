@@ -28,15 +28,71 @@ botonPlay.addEventListener('click', () => {
     }
 });
 
+
+
+
+
 // Seleccionamos la barra de progreso
 const barraProgreso = document.querySelector('.progress-fill');
 
-// Escuchamos el audio para actualizar la barra de progreso
-audio.addEventListener('timeupdate', () => {
-    // Calculamos el porcentaje de progreso (tiempo actual / duración total)
-    // Si la cancion dura 100s y va por 50s, el porcentaje es 50%
-    const porcentaje = (audio.currentTime / audio.duration) * 100;
+const tiempoActualEl = document.getElementById('tiempoActual');
+const tiempoTotalEl = document.getElementById('tiempoTotal');
 
-    // Actualizamos el ancho de la barra de progreso
+// Actualizamos el tiempo actual y el tiempo total del audio
+audio.addEventListener('timeupdate', () => {
+
+    // 1. Barra de progreso
+    const porcentaje = (audio.currentTime / audio.duration) * 100;
     barraProgreso.style.width = porcentaje + '%';
+
+    // 2. Tiempos numericos
+    // Calcular minutos y segundos actuales
+    // Math.floor quita los decimales
+    const minActual = Math.floor(audio.currentTime / 60);
+    const segActual = Math.floor(audio.currentTime % 60);
+
+    // Calcular minutos y segundos totales
+    const minTotal = Math.floor(audio.duration / 60);
+    const segTotal = Math.floor(audio.duration % 60);
+
+    // Formatear segundos para que siempre tengan dos digitos
+    const segActualFormat = segActual < 10 ? `0${segActual}` : segActual;
+    const segTotalFormat = segTotal < 10 ? `0${segTotal}` : segTotal;
+
+    // Pintar los tiempos en el HTML
+    tiempoActualEl.textContent = `${minActual}:${segActualFormat}`;
+
+    // Solo pintamos el total si ya cargo la duracion
+    if (audio.duration) {
+        tiempoTotalEl.textContent = `${minTotal}:${segTotalFormat}`;
+    }
+});
+
+
+
+
+// 1. Seleccionamos Especificamente la barra de progreso completa
+const BarraClickeable = document.querySelector('.progress-bar');
+
+// 2. Agregamos un evento de click a la barra completa
+BarraClickeable.addEventListener('click', (e) => {
+
+    // --- LA MAGIA DE LA PRECISION ---
+    // getBoundingClientRect() nos da las medidas del elemento y su posicion en la pantalla
+    const rect = BarraClickeable.getBoundingClientRect();
+
+    // Ancho exacto de la barra
+    const anchoBarra = rect.width;
+
+    // Calcular la posicion del click dentro de la barra
+    // e.clientX nos da la posicion del click en la pantalla
+    // rect.left nos da la posicion izquierda de la barra en la pantalla
+    // La resta nos da la posicion exacta del click dentro de la barra
+    const clickX = e.clientX - rect.left;
+
+    // Duracion total del audio
+    const duracion = audio.duration;
+
+    // Calcular el nuevo tiempo del audio basado en la posicion del click
+    audio.currentTime = (clickX / anchoBarra) * duracion;
 });
