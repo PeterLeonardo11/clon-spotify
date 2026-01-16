@@ -1,98 +1,134 @@
-// 1. Seleccionamos el circulo del reproductor
-const botonPlay = document.querySelector('.play-circle');
-
-// 2. Seleccionamos el icono que esta dentro del circulo
-const icono = botonPlay.querySelector('i');
-
-// Seleccionamos el elemento de audio
+// ---- 1. SELECCIONAMOS ELEMENTOS DEL DOM -----
 const audio = document.getElementById('miAudio');
+const playBtn = document.querySelector('.play-circle');
+const playIcon = playBtn.querySelector('i');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
 
-// .3. Agregamos un evento de click al circulo
-botonPlay.addEventListener('click', () => {
-    
-    // 4. Verificamos si el icono tiene la clase 'fa-play'
-    if (icono.classList.contains('fa-play')) {
-        // 5. Si tiene 'fa-play', cambiamos a 'fa-pause'
-        icono.classList.remove('fa-play');
-        icono.classList.add('fa-pause');
-
-        audio.play(); // Reproducir el audio
-        console.log('Reproduciendo música');
-    } else {
-        // 6. No es play (es pause), cambiamos a 'fa-play'
-        icono.classList.remove('fa-pause');
-        icono.classList.add('fa-play');
-
-        audio.pause(); // Pausar el audio
-        console.log('Música en pausa');
-    }
-});
-
-
-
-
-
-// Seleccionamos la barra de progreso
+// Elementos visuales a actualizar
+const coverImg = document.querySelector('.player-left img');
+const titleText = document.querySelector('.song-info h4');
+const artistText = document.querySelector('.song-info p');
 const barraProgreso = document.querySelector('.progress-fill');
-
+const barraClicleable = document.querySelector('.progress-bar');
 const tiempoActualEl = document.getElementById('tiempoActual');
 const tiempoTotalEl = document.getElementById('tiempoTotal');
 
-// Actualizamos el tiempo actual y el tiempo total del audio
-audio.addEventListener('timeupdate', () => {
+// ---- 2. NUESTRA PLAYLIST (ARRAY DE OBJETOS) -----
+const songs = [
+    {
+        title: "Afterlife",
+        artist: "Avenged Sevenfold",
+        src: "audio/Avenged_Sevenfold_-_Afterlife_Album_Version_(mp3.pm).mp3",
+        cover: "img/afterlife.jfif"
+    },
+    {
+        title: "Nightmare",
+        artist: "Avenged Sevenfold",
+        src: "audio/Nightmare_-_Avenged_Sevenfold_(mp3.pm).mp3",
+        cover: "img/nightmare.jfif"
+    },
+    {
+        title: "Shepherd of Fire",
+        artist: "Avenged Sevenfold",
+        src: "audio/Aenged_Sevenfold_-_SHEPHERD_OF_FIRE_(mp3.pm).mp3",
+        cover: "img/shepherdoffire.jfif"
+    }
+];
 
-    // 1. Barra de progreso
-    const porcentaje = (audio.currentTime / audio.duration) * 100;
-    barraProgreso.style.width = porcentaje + '%';
+// Indice actual (Empieza en la primera canción)
+let songIndex = 0;
 
-    // 2. Tiempos numericos
-    // Calcular minutos y segundos actuales
-    // Math.floor quita los decimales
-    const minActual = Math.floor(audio.currentTime / 60);
-    const segActual = Math.floor(audio.currentTime % 60);
+// ---- 3. FUNCION PARA CARGAR LA CANCIÓN -----
+function loadSong(song) {
+    titleText.textContent = song.title;
+    artistText.textContent = song.artist;
+    audio.src = song.src;
+    coverImg.src = song.cover;
+}
 
-    // Calcular minutos y segundos totales
-    const minTotal = Math.floor(audio.duration / 60);
-    const segTotal = Math.floor(audio.duration % 60);
+// Cargar la primera canción al iniciar
+loadSong(songs[songIndex]);
 
-    // Formatear segundos para que siempre tengan dos digitos
-    const segActualFormat = segActual < 10 ? `0${segActual}` : segActual;
-    const segTotalFormat = segTotal < 10 ? `0${segTotal}` : segTotal;
+// ---- 4. CONTROL DE REPRODUCCIÓN  (PLAY/PAUSE) -----
+function playSong() {
+    playIcon.classList.remove('fa-play');
+    playIcon.classList.add('fa-pause');
+    audio.play();
+}
 
-    // Pintar los tiempos en el HTML
-    tiempoActualEl.textContent = `${minActual}:${segActualFormat}`;
+function pauseSong() {
+    playIcon.classList.remove('fa-pause');
+    playIcon.classList.add('fa-play');
+    audio.pause();
+}
 
-    // Solo pintamos el total si ya cargo la duracion
-    if (audio.duration) {
-        tiempoTotalEl.textContent = `${minTotal}:${segTotalFormat}`;
+playBtn.addEventListener('click', () => {
+    // Si tiene la clase 'fa-play', significa que está pausado
+    const isPlaying = playIcon.classList.contains('fa-pause');
+    if (isPlaying) {
+        pauseSong();
+    } else {
+        playSong();
     }
 });
 
+// ---- 5. FUNCIONES NEXT Y PREV -----
+function nextSong() {
+    songIndex++; // Incrementar el índice
+    
+    // Si el índice supera el tamaño del array, volver al inicio
+    if (songIndex > songs.length - 1) {
+        songIndex = 0;
+    }
 
+    loadSong(songs[songIndex]); // Cargar la nueva canción
+    playSong(); // Reproducirla automáticamente
+}
 
+function prevSong() {
+    songIndex--; // Restamos uno
 
-// 1. Seleccionamos Especificamente la barra de progreso completa
-const BarraClickeable = document.querySelector('.progress-bar');
+    // Si el índice es menor que 0, ir a la última canción
+    if(songIndex < 0){
+        songIndex = songs.length - 1;
+    }
 
-// 2. Agregamos un evento de click a la barra completa
-BarraClickeable.addEventListener('click', (e) => {
+    loadSong(songs[songIndex]); // Cargar la nueva canción
+    playSong(); // Reproducirla automáticamente
+}
 
-    // --- LA MAGIA DE LA PRECISION ---
-    // getBoundingClientRect() nos da las medidas del elemento y su posicion en la pantalla
-    const rect = BarraClickeable.getBoundingClientRect();
+// Eventos para los botones
+nextBtn.addEventListener('click', nextSong);
+prevBtn.addEventListener('click', prevSong);
+// Extra: Pasar a la siguiente canción cuando termine la actual
+audio.addEventListener('ended', nextSong);
 
-    // Ancho exacto de la barra
-    const anchoBarra = rect.width;
+// ---- 6. BARRA DE PROGRESO Y TIEMPO -----
+audio.addEventListener('timeupdate', () => {
+    // Barra de progreso
+    const porcentaje = (audio.currentTime / audio.duration) * 100;
+    barraProgreso.style.width = porcentaje + '%';
 
-    // Calcular la posicion del click dentro de la barra
-    // e.clientX nos da la posicion del click en la pantalla
-    // rect.left nos da la posicion izquierda de la barra en la pantalla
-    // La resta nos da la posicion exacta del click dentro de la barra
+    // Tiempos numéricos
+    const minActual = Math.floor(audio.currentTime / 60);
+    const segActual = Math.floor(audio.currentTime % 60);
+    const minTotal = Math.floor(audio.duration / 60);
+    const segTotal = Math.floor(audio.duration % 60);
+
+    tiempoActualEl.textContent = `${minActual}:${segActual < 10 ? '0' + segActual : segActual}`;
+    
+    if (audio.duration) {
+        tiempoTotalEl.textContent = `${minTotal}:${segTotal < 10 ? '0' + segTotal : segTotal}`;
+    }
+});
+
+// Seek en la barra de progreso
+barraClicleable.addEventListener('click', (e) => {
+    const rect = barraClicleable.getBoundingClientRect();
+    const anchoTotal = rect.width;
     const clickX = e.clientX - rect.left;
-
-    // Duracion total del audio
     const duracion = audio.duration;
 
-    // Calcular el nuevo tiempo del audio basado en la posicion del click
-    audio.currentTime = (clickX / anchoBarra) * duracion;
+    audio.currentTime = (clickX / anchoTotal) * duracion;
 });
